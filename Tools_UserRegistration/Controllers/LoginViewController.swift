@@ -13,8 +13,10 @@ class LoginViewController: UIViewController {
     // MARK: - Properties
     
     let userTextField: UITextField = {
-        let textField = UITextField(frame: CGRect(x: 80, y: 300, width: 100, height: 50))
+        let textField = UITextField(frame: CGRect(x: 80, y: 300, width: 200, height: 50))
         textField.backgroundColor = .yellow
+        textField.layer.cornerRadius = 10
+        textField.placeholder = "User Name"
         return textField
     }()
     
