@@ -12,6 +12,12 @@ class LoginViewController: UIViewController {
     
     // MARK: - Properties
     
+    let userTextField: UITextField = {
+        let textField = UITextField(frame: CGRect(x: 80, y: 300, width: 100, height: 50))
+        textField.backgroundColor = .yellow
+        return textField
+    }()
+    
     let fbLoginButton: FBLoginButton = {
         let button = FBLoginButton()
         return button
@@ -22,6 +28,8 @@ class LoginViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        view.addSubview(userTextField)
         
         //Add FBLoginButton at the center of the view controller
         fbLoginButton.center = view.center
