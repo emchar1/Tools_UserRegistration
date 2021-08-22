@@ -10,11 +10,15 @@ import FBSDKLoginKit
 
 class LoginViewController: UIViewController {
     
+    // MARK: - Properties
+    
     let fbLoginButton: FBLoginButton = {
         let button = FBLoginButton()
         return button
     }()
     
+    
+    // MARK: - Functions
     
     override func viewDidLoad() {
         super.viewDidLoad()
