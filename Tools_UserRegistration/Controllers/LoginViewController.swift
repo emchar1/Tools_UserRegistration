@@ -12,17 +12,32 @@ class LoginViewController: UIViewController {
     
     // MARK: - Properties
     
-    let userTextField: UITextField = {
-        let textField = UITextField(frame: CGRect(x: 80, y: 300, width: 200, height: 50))
-        textField.backgroundColor = .yellow
-        textField.layer.cornerRadius = 10
-        textField.placeholder = "User Name"
-        return textField
-    }()
+    let userTextField = LoginTextField()
+    let passwordTextField = LoginTextField(type: .password)
     
+    let signInButton: UIButton = {
+        let button = UIButton(frame: CGRect(x: 0, y: 0, width: 25, height: 50))
+        button.layer.cornerRadius = 8
+        button.backgroundColor = .blue
+        button.setTitle("Sign In", for: .normal)
+        button.setTitle("Pushed", for: .highlighted)
+        return button
+    }()
+
     let fbLoginButton: FBLoginButton = {
         let button = FBLoginButton()
         return button
+    }()
+    
+    let stackView: UIStackView = {
+        let stackView = UIStackView()
+        stackView.distribution = .equalCentering
+        stackView.alignment = .fill
+        stackView.axis = .vertical
+        stackView.spacing = 20
+        stackView.backgroundColor = .yellow
+        stackView.translatesAutoresizingMaskIntoConstraints = false
+        return stackView
     }()
     
     
@@ -31,19 +46,22 @@ class LoginViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        view.addSubview(userTextField)
+        view.backgroundColor = .systemTeal
         
-        //Add FBLoginButton at the center of the view controller
-        fbLoginButton.center = view.center
-        view.addSubview(fbLoginButton)
+        view.addSubview(stackView)
+        NSLayoutConstraint.activate([stackView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 30),
+                                     view.trailingAnchor.constraint(equalTo: stackView.trailingAnchor, constant: 30),
+                                     stackView.centerYAnchor.constraint(equalTo: view.centerYAnchor)])
+
+        stackView.addArrangedSubview(userTextField)
+        stackView.addArrangedSubview(passwordTextField)
+        stackView.addArrangedSubview(signInButton)
+        stackView.addArrangedSubview(fbLoginButton)
         
         //Observe access token changes. this will trigger after successfully login/logout
         NotificationCenter.default.addObserver(forName: .AccessTokenDidChange, object: nil, queue: OperationQueue.main) { notification in
             print("*******FB Access Token: \(String(describing: AccessToken.current?.tokenString))")
         }
     }
-    
-    
-    
 }
 
