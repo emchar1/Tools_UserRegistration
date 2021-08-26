@@ -12,8 +12,8 @@ class LoginViewController: UIViewController {
     
     // MARK: - Properties
     
-    let userTextField = LoginTextField()
-    let passwordTextField = LoginTextField(type: .password)
+    let userTextField = LoginTextView()
+    let passwordTextField = LoginTextView(type: .password)
     
     let signInButton: UIButton = {
         let button = UIButton(frame: CGRect(x: 0, y: 0, width: 25, height: 50))
@@ -35,14 +35,14 @@ class LoginViewController: UIViewController {
         stackView.alignment = .fill
         stackView.axis = .vertical
         stackView.spacing = 20
-        stackView.backgroundColor = .yellow
+        stackView.backgroundColor = .clear
         stackView.translatesAutoresizingMaskIntoConstraints = false
         return stackView
     }()
     
     
     // MARK: - Functions
-    
+        
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -54,7 +54,9 @@ class LoginViewController: UIViewController {
                                      stackView.centerYAnchor.constraint(equalTo: view.centerYAnchor)])
 
         stackView.addArrangedSubview(userTextField)
+        userTextField.setConstraints(in: stackView.arrangedSubviews[0])
         stackView.addArrangedSubview(passwordTextField)
+        passwordTextField.setConstraints(in: stackView.arrangedSubviews[1])
         stackView.addArrangedSubview(signInButton)
         stackView.addArrangedSubview(fbLoginButton)
         

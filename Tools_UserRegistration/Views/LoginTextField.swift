@@ -35,7 +35,7 @@ class LoginTextField: UITextField, UITextFieldDelegate {
     }
         
     private func setup() {
-        backgroundColor = .white
+        backgroundColor = .systemBackground
         layer.cornerRadius = 8.0
 
         layer.shadowColor = UIColor.black.cgColor
