@@ -46,7 +46,7 @@ class LoginViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        view.backgroundColor = .systemTeal
+        view.backgroundColor = UIColor(named: "colorBackgroundView")
         
         view.addSubview(stackView)
         NSLayoutConstraint.activate([stackView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 30),

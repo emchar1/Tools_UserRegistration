@@ -5,13 +5,11 @@
 //  Created by Eddie Char on 8/23/21.
 //
 
-// MARK: - ATTEMPTING TO CLONE LoginTextField BUT WITH AN ENCOMPASSING VIEW...
 import UIKit
 
 enum LoginTextType {
     case email, password, `default`
 }
-
 
 class LoginTextView: UIView, UITextFieldDelegate {
     

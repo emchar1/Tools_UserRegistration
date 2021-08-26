@@ -5,6 +5,9 @@
 //  Created by Eddie Char on 8/22/21.
 //
 
+
+//DEFUNCT SOON!!!
+
 import UIKit
 
 enum TextFieldType {
