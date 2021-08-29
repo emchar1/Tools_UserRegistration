@@ -16,6 +16,7 @@
 		EA0E050426D1DA1800DAFCB5 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EA0E050226D1DA1800DAFCB5 /* LaunchScreen.storyboard */; };
 		EAF7F53426D2BF5C00FE50E1 /* LoginTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAF7F53326D2BF5C00FE50E1 /* LoginTextField.swift */; };
 		EAF7F53626D4C4C900FE50E1 /* LoginTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAF7F53526D4C4C900FE50E1 /* LoginTextView.swift */; };
+		EAF7F53926DB7B6B00FE50E1 /* K.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAF7F53826DB7B6B00FE50E1 /* K.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -32,6 +33,7 @@
 		EA0E050526D1DA1800DAFCB5 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		EAF7F53326D2BF5C00FE50E1 /* LoginTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginTextField.swift; sourceTree = "<group>"; };
 		EAF7F53526D4C4C900FE50E1 /* LoginTextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginTextView.swift; sourceTree = "<group>"; };
+		EAF7F53826DB7B6B00FE50E1 /* K.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = K.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -76,6 +78,7 @@
 		EA0E04F626D1DA1600DAFCB5 /* Tools_UserRegistration */ = {
 			isa = PBXGroup;
 			children = (
+				EAF7F53726DB7B5100FE50E1 /* Tools */,
 				EA0E050B26D1DA2A00DAFCB5 /* Models */,
 				EA0E050C26D1DA3400DAFCB5 /* Views */,
 				EA0E050D26D1DA3900DAFCB5 /* Controllers */,
@@ -111,6 +114,14 @@
 				EA0E04FB26D1DA1600DAFCB5 /* LoginViewController.swift */,
 			);
 			path = Controllers;
+			sourceTree = "<group>";
+		};
+		EAF7F53726DB7B5100FE50E1 /* Tools */ = {
+			isa = PBXGroup;
+			children = (
+				EAF7F53826DB7B6B00FE50E1 /* K.swift */,
+			);
+			path = Tools;
 			sourceTree = "<group>";
 		};
 		FA701AD5517F518E71321446 /* Frameworks */ = {
@@ -238,6 +249,7 @@
 				EA0E04FC26D1DA1600DAFCB5 /* LoginViewController.swift in Sources */,
 				EAF7F53626D4C4C900FE50E1 /* LoginTextView.swift in Sources */,
 				EAF7F53426D2BF5C00FE50E1 /* LoginTextField.swift in Sources */,
+				EAF7F53926DB7B6B00FE50E1 /* K.swift in Sources */,
 				EA0E04F826D1DA1600DAFCB5 /* AppDelegate.swift in Sources */,
 				EA0E04FA26D1DA1600DAFCB5 /* SceneDelegate.swift in Sources */,
 			);

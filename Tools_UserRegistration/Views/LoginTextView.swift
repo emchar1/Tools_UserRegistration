@@ -11,12 +11,18 @@ enum LoginTextType {
     case email, password, `default`
 }
 
-class LoginTextView: UIView, UITextFieldDelegate {
+protocol LoginTextViewDelegate {
+    func didPressReturn(_ view: LoginTextView)
+}
+
+class LoginTextView: UIView {
     
     // MARK: - Properties
     
-    let textField = UITextField()
     let type: LoginTextType
+    var textField: UITextField!
+    var peekButton: UIButton?
+    var delegate: LoginTextViewDelegate?
     
     
     // MARK: - Initialization
@@ -24,14 +30,12 @@ class LoginTextView: UIView, UITextFieldDelegate {
     init(type: LoginTextType = .email) {
         self.type = type
         super.init(frame: .zero)
-        textField.delegate = self
         setup()
     }
     
     required init?(coder: NSCoder) {
         self.type = .default
         super.init(coder: coder)
-        textField.delegate = self
         setup()
     }
 
@@ -45,15 +49,20 @@ class LoginTextView: UIView, UITextFieldDelegate {
         layer.shadowRadius = 5.0
         
         let padding: CGFloat = 8.0
+        let stackView = UIStackView()
+        stackView.axis = .horizontal
+        stackView.translatesAutoresizingMaskIntoConstraints = false
+        addSubview(stackView)
+        NSLayoutConstraint.activate([stackView.topAnchor.constraint(equalTo: topAnchor, constant: padding),
+                                     stackView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: padding),
+                                     bottomAnchor.constraint(equalTo: stackView.bottomAnchor, constant: padding),
+                                     trailingAnchor.constraint(equalTo: stackView.trailingAnchor, constant: padding)])
+        
+        textField = UITextField()
         textField.delegate = self
-        textField.backgroundColor = .systemBackground
-        textField.translatesAutoresizingMaskIntoConstraints = false
-
-        addSubview(textField)
-        NSLayoutConstraint.activate([textField.topAnchor.constraint(equalTo: topAnchor, constant: padding),
-                                     textField.leadingAnchor.constraint(equalTo: leadingAnchor, constant: padding),
-                                     bottomAnchor.constraint(equalTo: textField.bottomAnchor, constant: padding),
-                                     trailingAnchor.constraint(equalTo: textField.trailingAnchor, constant: padding)])
+        textField.returnKeyType = .next
+        stackView.addArrangedSubview(textField)
+        
         
         switch type {
         case .email:
@@ -66,25 +75,25 @@ class LoginTextView: UIView, UITextFieldDelegate {
             textField.autocapitalizationType = .none
             textField.autocorrectionType = .no
             textField.isSecureTextEntry = true
+            
+            peekButton = UIButton()
+            peekButton!.setImage(UIImage(systemName: "eye.slash.fill"), for: .normal)
+            peekButton!.tintColor = .label
+            peekButton!.addTarget(self, action: #selector(peekPasswordTapped(_:)), for: .touchDown)
+
+            stackView.addArrangedSubview(peekButton!)
+            stackView.arrangedSubviews[0].setContentHuggingPriority(.defaultLow, for: .horizontal)
+            stackView.arrangedSubviews[1].setContentHuggingPriority(.defaultHigh, for: .horizontal)
         case .default:
             textField.placeholder = "Text Field"
         }
                 
-        animate()
+        animateTextField()
     }
 
 
     // MARK: - Methods
     
-//    override func textRect(forBounds bounds: CGRect) -> CGRect {
-//        let rect = super.textRect(forBounds: bounds)
-//        return rect.inset(by: UIEdgeInsets(top: 8.0, left: 8.0, bottom: 8.0, right: 8.0))
-//    }
-//
-//    override func editingRect(forBounds bounds: CGRect) -> CGRect {
-//        let rect = super.editingRect(forBounds: bounds)
-//        return rect.inset(by: UIEdgeInsets(top: 8.0, left: 8.0, bottom: 8.0, right: 8.0))
-//    }
     func setConstraints(in view: UIView) {
         translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([topAnchor.constraint(equalTo: view.topAnchor),
@@ -93,22 +102,42 @@ class LoginTextView: UIView, UITextFieldDelegate {
                                      view.trailingAnchor.constraint(equalTo: trailingAnchor)])
     }
     
-    
-    // MARK: - UITextFieldDelegate
-    
-    func textFieldDidBeginEditing(_ textField: UITextField) {
-        animate()
+    @objc private func peekPasswordTapped(_ recognizer: UITapGestureRecognizer) {
+        guard let peekButton = peekButton else { return }
+
+        textField.isSecureTextEntry = !textField.isSecureTextEntry
+        peekButton.setImage(!textField.isSecureTextEntry ? UIImage(systemName: "eye.fill") : UIImage(systemName: "eye.slash.fill"), for: .normal)
+
+        //Only fade textField is not in edit mode
+        if !textField.isEditing {
+            animateTextField()
+        }
     }
     
-    func textFieldDidChangeSelection(_ textField: UITextField) {
-        animate()
-    }
-    
-    private func animate() {
+    private func animateTextField() {
         alpha = 1.0
 
-        UIView.animate(withDuration: 0.25, delay: 3.0, options: .curveLinear, animations: {
+        UIView.animate(withDuration: 0.25, delay: 3.0, options: [.curveLinear, .allowUserInteraction], animations: {
             self.alpha = 0.75
         }, completion: nil)
+    }
+}
+
+
+// MARK: - UITextFieldDelegate
+    
+extension LoginTextView: UITextFieldDelegate {
+    func textFieldDidBeginEditing(_ textField: UITextField) {
+        alpha = 1.0
+    }
+
+    func textFieldDidEndEditing(_ textField: UITextField) {
+        animateTextField()
+    }
+
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        delegate?.didPressReturn(self)
+
+        return false
     }
 }
