@@ -12,8 +12,8 @@ class LoginViewController: UIViewController {
     
     // MARK: - Properties
     
-    let userTextField = LoginTextView()
-    let passwordTextField = LoginTextView(type: .password)
+    let emailField = LoginTextView()
+    let passwordField = LoginTextView(type: .password)
     let fbLoginButton = FBLoginButton()
 
     let signInButton: UIButton = {
@@ -43,9 +43,9 @@ class LoginViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        userTextField.delegate = self
-        passwordTextField.delegate = self
-        userTextField.textField.becomeFirstResponder()
+        emailField.delegate = self
+        passwordField.delegate = self
+        emailField.textField.becomeFirstResponder()
 
         view.backgroundColor = UIColor(named: "colorBackgroundView")
         view.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(didTapView(_:))))
@@ -56,10 +56,10 @@ class LoginViewController: UIViewController {
                                      view.trailingAnchor.constraint(equalTo: stackView.trailingAnchor, constant: 30),
                                      stackView.centerYAnchor.constraint(equalTo: view.centerYAnchor)])
         
-        stackView.addArrangedSubview(userTextField)
-        userTextField.setConstraints(in: stackView.arrangedSubviews[0])
-        stackView.addArrangedSubview(passwordTextField)
-        passwordTextField.setConstraints(in: stackView.arrangedSubviews[1])
+        stackView.addArrangedSubview(emailField)
+        emailField.setConstraints(in: stackView.arrangedSubviews[0])
+        stackView.addArrangedSubview(passwordField)
+        passwordField.setConstraints(in: stackView.arrangedSubviews[1])
         stackView.addArrangedSubview(signInButton)
         stackView.addArrangedSubview(fbLoginButton)
         stackView.addArrangedSubview(FBLoginButton())
@@ -87,36 +87,53 @@ class LoginViewController: UIViewController {
     }
     
     private func didCheckSignIn() {
-        guard userTextField.textField.text!.count > 0 else {
-            print("Email cannot be blank!")
+        guard emailField.textField.text!.count > 0 else {
+            didCheckSignInAlertAction(title: "Error", message: "Email cannot be blank!") { _ in
+                self.emailField.textField.becomeFirstResponder()
+            }
+
             return
         }
         
-        guard passwordTextField.textField.text!.count > 0 else {
-            print("Password cannot be blank!")
+        guard passwordField.textField.text!.count > 0 else {
+            didCheckSignInAlertAction(title: "Error", message: "Password cannot be blank!") { _ in
+                self.passwordField.textField.becomeFirstResponder()
+            }
+
             return
         }
 
-        guard isValidEmailAddress(userTextField.textField.text!) else {
-            print("Invalid email!")
+        guard isValidEmailAddress(emailField.textField.text!) else {
+            didCheckSignInAlertAction(title: "Error", message: "Email address is invalid! Double-check your email and resubmit.") { _ in
+                self.emailField.textField.becomeFirstResponder()
+            }
+            
             return
         }
         
         
-        print("Signed in successfully!")
+        didCheckSignInAlertAction(title: "Success", message: "Signed in successfully!")
+    }
+    
+    private func didCheckSignInAlertAction(title: String, message: String, completion: ((UIAlertAction) -> Void)? = nil) {
+        let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
+        let actionOK = UIAlertAction(title: "OK", style: .default, handler: completion)
+
+        alert.addAction(actionOK)
+        present(alert, animated: true, completion: nil)
     }
 }
 
 extension LoginViewController: LoginTextViewDelegate {
     func didPressReturn(_ view: LoginTextView) {
-        if view === userTextField {
+        if view === emailField {
             view.textField.resignFirstResponder()
-            passwordTextField.textField.becomeFirstResponder()
-        } else if view === passwordTextField {
+            passwordField.textField.becomeFirstResponder()
+        } else if view === passwordField {
             view.textField.resignFirstResponder()
             
-            if userTextField.textField.text!.count <= 0 || passwordTextField.textField.text!.count <= 0 {
-                userTextField.textField.becomeFirstResponder()
+            if emailField.textField.text!.count <= 0 || passwordField.textField.text!.count <= 0 {
+                emailField.textField.becomeFirstResponder()
             }
             else {
                 print("Done!")

@@ -61,6 +61,7 @@ class LoginTextView: UIView {
         textField = UITextField()
         textField.delegate = self
         textField.returnKeyType = .next
+        textField.enablesReturnKeyAutomatically = true
         stackView.addArrangedSubview(textField)
         
         
@@ -140,4 +141,15 @@ extension LoginTextView: UITextFieldDelegate {
 
         return false
     }
+    
+//    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+//        if textField.text!.count <= 0 {
+//            self.textField.enablesReturnKeyAutomatically = true
+//        }
+//        else {
+//            self.textField.enablesReturnKeyAutomatically = false
+//        }
+//
+//        return true
+//    }
 }
