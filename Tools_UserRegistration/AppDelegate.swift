@@ -7,6 +7,7 @@
 
 import UIKit
 import FBSDKCoreKit                                 //FB SDK CoreKit Pod
+import Firebase
 
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -14,7 +15,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         //Swift Senpai Tutorial instructs adding this function call.
         ApplicationDelegate.shared.application(application, didFinishLaunchingWithOptions: launchOptions)
-
+        
+        FirebaseApp.configure()
+        
         return true
     }
     

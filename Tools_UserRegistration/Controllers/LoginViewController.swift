@@ -7,6 +7,7 @@
 
 import UIKit
 import FBSDKLoginKit
+import FirebaseAuth
 
 class LoginViewController: UIViewController {
     
@@ -18,9 +19,9 @@ class LoginViewController: UIViewController {
     
     let alertLabel: UILabel = {
         let label = UILabel()
-        label.font = UIFont(name: "Avenir", size: 14)
+        label.font = UIFont(name: "Avenir", size: 15)
         label.text = "Label text here"
-        label.textColor = .white
+        label.textColor = .systemYellow
         label.textAlignment = .center
         label.shadowColor = .black
         label.shadowOffset = CGSize(width: 1, height: 1)
@@ -120,7 +121,17 @@ class LoginViewController: UIViewController {
         }
         
 
-        performSegue(withIdentifier: "segueSuccess", sender: nil)
+        Auth.auth().signIn(withEmail: emailField.textField.text!, password: passwordField.textField.text!) { (authResult, error) in
+            guard error == nil else {
+                self.performSegue(withIdentifier: "segueFail", sender: nil)
+                print(error!.localizedDescription)
+                return
+            }
+            
+            
+            self.performSegue(withIdentifier: "segueSuccess", sender: nil)
+            print("Login successful!")
+        }
     }
         
     private func didCheckSignInAlert(message: String) {
@@ -145,7 +156,6 @@ extension LoginViewController: LoginTextViewDelegate {
                 emailField.textField.becomeFirstResponder()
             }
             else {
-                print("Done!")
                 didCheckSignIn()
             }
         }

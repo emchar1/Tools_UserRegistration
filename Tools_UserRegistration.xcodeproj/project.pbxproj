@@ -14,6 +14,7 @@
 		EA0E04FF26D1DA1600DAFCB5 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EA0E04FD26D1DA1600DAFCB5 /* Main.storyboard */; };
 		EA0E050126D1DA1800DAFCB5 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = EA0E050026D1DA1800DAFCB5 /* Assets.xcassets */; };
 		EA0E050426D1DA1800DAFCB5 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EA0E050226D1DA1800DAFCB5 /* LaunchScreen.storyboard */; };
+		EA65A5A926DD5AA300EB14C9 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = EA65A5A826DD5AA300EB14C9 /* GoogleService-Info.plist */; };
 		EAF7F53626D4C4C900FE50E1 /* LoginTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAF7F53526D4C4C900FE50E1 /* LoginTextView.swift */; };
 		EAF7F53926DB7B6B00FE50E1 /* K.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAF7F53826DB7B6B00FE50E1 /* K.swift */; };
 /* End PBXBuildFile section */
@@ -30,6 +31,7 @@
 		EA0E050026D1DA1800DAFCB5 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		EA0E050326D1DA1800DAFCB5 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		EA0E050526D1DA1800DAFCB5 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		EA65A5A826DD5AA300EB14C9 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		EAF7F53526D4C4C900FE50E1 /* LoginTextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginTextView.swift; sourceTree = "<group>"; };
 		EAF7F53826DB7B6B00FE50E1 /* K.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = K.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -85,6 +87,7 @@
 				EA0E050026D1DA1800DAFCB5 /* Assets.xcassets */,
 				EA0E050226D1DA1800DAFCB5 /* LaunchScreen.storyboard */,
 				EA0E050526D1DA1800DAFCB5 /* Info.plist */,
+				EA65A5A826DD5AA300EB14C9 /* GoogleService-Info.plist */,
 			);
 			path = Tools_UserRegistration;
 			sourceTree = "<group>";
@@ -189,6 +192,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				EA0E050426D1DA1800DAFCB5 /* LaunchScreen.storyboard in Resources */,
+				EA65A5A926DD5AA300EB14C9 /* GoogleService-Info.plist in Resources */,
 				EA0E050126D1DA1800DAFCB5 /* Assets.xcassets in Resources */,
 				EA0E04FF26D1DA1600DAFCB5 /* Main.storyboard in Resources */,
 			);
