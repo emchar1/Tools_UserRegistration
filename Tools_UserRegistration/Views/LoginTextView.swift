@@ -15,6 +15,7 @@ protocol LoginTextViewDelegate {
     func didPressReturn(_ view: LoginTextView)
 }
 
+
 class LoginTextView: UIView {
     
     // MARK: - Properties
@@ -41,7 +42,7 @@ class LoginTextView: UIView {
 
     private func setup() {
         backgroundColor = .systemBackground
-        layer.cornerRadius = 8.0
+        layer.cornerRadius = 4.0
 
         layer.shadowColor = UIColor.black.cgColor
         layer.shadowOpacity = 0.2
@@ -138,18 +139,6 @@ extension LoginTextView: UITextFieldDelegate {
 
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         delegate?.didPressReturn(self)
-
         return false
     }
-    
-//    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
-//        if textField.text!.count <= 0 {
-//            self.textField.enablesReturnKeyAutomatically = true
-//        }
-//        else {
-//            self.textField.enablesReturnKeyAutomatically = false
-//        }
-//
-//        return true
-//    }
 }

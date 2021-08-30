@@ -15,10 +15,23 @@ class LoginViewController: UIViewController {
     let emailField = LoginTextView()
     let passwordField = LoginTextView(type: .password)
     let fbLoginButton = FBLoginButton()
+    
+    let alertLabel: UILabel = {
+        let label = UILabel()
+        label.font = UIFont(name: "Avenir", size: 14)
+        label.text = "Label text here"
+        label.textColor = .white
+        label.textAlignment = .center
+        label.shadowColor = .black
+        label.shadowOffset = CGSize(width: 1, height: 1)
+        label.numberOfLines = 0
+        label.alpha = 0
+        return label
+    }()
 
     let signInButton: UIButton = {
         let button = UIButton(type: .system)
-        button.layer.cornerRadius = 8
+        button.layer.cornerRadius = 15
         button.backgroundColor = .blue
         button.setTitle("Sign In", for: .normal)
         button.setTitleColor(.white, for: .normal)
@@ -61,6 +74,7 @@ class LoginViewController: UIViewController {
         stackView.addArrangedSubview(passwordField)
         passwordField.setConstraints(in: stackView.arrangedSubviews[1])
         stackView.addArrangedSubview(signInButton)
+        stackView.addArrangedSubview(alertLabel)
         stackView.addArrangedSubview(fbLoginButton)
         stackView.addArrangedSubview(FBLoginButton())
         stackView.addArrangedSubview(FBLoginButton())
@@ -88,39 +102,34 @@ class LoginViewController: UIViewController {
     
     private func didCheckSignIn() {
         guard emailField.textField.text!.count > 0 else {
-            didCheckSignInAlertAction(title: "Error", message: "Email cannot be blank!") { _ in
-                self.emailField.textField.becomeFirstResponder()
-            }
-
+            didCheckSignInAlert(message: "Email cannot be blank!")
+            emailField.textField.becomeFirstResponder()
             return
         }
         
         guard passwordField.textField.text!.count > 0 else {
-            didCheckSignInAlertAction(title: "Error", message: "Password cannot be blank!") { _ in
-                self.passwordField.textField.becomeFirstResponder()
-            }
-
+            didCheckSignInAlert(message: "Password cannot be blank!")
+            passwordField.textField.becomeFirstResponder()
             return
         }
 
         guard isValidEmailAddress(emailField.textField.text!) else {
-            didCheckSignInAlertAction(title: "Error", message: "Email address is invalid! Double-check your email and resubmit.") { _ in
-                self.emailField.textField.becomeFirstResponder()
-            }
-            
+            didCheckSignInAlert(message: "Email address is invalid! Double-check your email and resubmit.")
+            emailField.textField.becomeFirstResponder()
             return
         }
         
-        
-        didCheckSignInAlertAction(title: "Success", message: "Signed in successfully!")
-    }
-    
-    private func didCheckSignInAlertAction(title: String, message: String, completion: ((UIAlertAction) -> Void)? = nil) {
-        let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
-        let actionOK = UIAlertAction(title: "OK", style: .default, handler: completion)
 
-        alert.addAction(actionOK)
-        present(alert, animated: true, completion: nil)
+        performSegue(withIdentifier: "segueSuccess", sender: nil)
+    }
+        
+    private func didCheckSignInAlert(message: String) {
+        alertLabel.text = message
+        alertLabel.alpha = 1.0
+        
+        UIView.animate(withDuration: 0.25, delay: TimeInterval(message.count / 10), options: .curveLinear, animations: {
+            self.alertLabel.alpha = 0.0
+        }, completion: nil)
     }
 }
 
