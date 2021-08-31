@@ -36,7 +36,7 @@ class LoginViewController: UIViewController {
         button.backgroundColor = .blue
         button.setTitle("Sign In", for: .normal)
         button.setTitleColor(.white, for: .normal)
-        button.addTarget(self, action: #selector(didPressSignIn(_:)), for: .touchDown)
+        button.addTarget(self, action: #selector(didPressSignIn(_:)), for: .touchUpInside)
         return button
     }()
 

@@ -22,7 +22,6 @@ class LoginTextView: UIView {
     
     let type: LoginTextType
     var textField: UITextField!
-    var peekButton: UIButton?
     var delegate: LoginTextViewDelegate?
     
     
@@ -52,6 +51,7 @@ class LoginTextView: UIView {
         let padding: CGFloat = 8.0
         let stackView = UIStackView()
         stackView.axis = .horizontal
+        stackView.spacing = padding
         stackView.translatesAutoresizingMaskIntoConstraints = false
         addSubview(stackView)
         NSLayoutConstraint.activate([stackView.topAnchor.constraint(equalTo: topAnchor, constant: padding),
@@ -59,38 +59,48 @@ class LoginTextView: UIView {
                                      bottomAnchor.constraint(equalTo: stackView.bottomAnchor, constant: padding),
                                      trailingAnchor.constraint(equalTo: stackView.trailingAnchor, constant: padding)])
         
+        let iconImageView = UIImageView()
+        iconImageView.tintColor = .tertiaryLabel
+        iconImageView.contentMode = .scaleAspectFit
+
         textField = UITextField()
         textField.delegate = self
         textField.returnKeyType = .next
         textField.enablesReturnKeyAutomatically = true
+
+        stackView.addArrangedSubview(iconImageView)
         stackView.addArrangedSubview(textField)
-        
+        stackView.arrangedSubviews[0].setContentHuggingPriority(.defaultHigh, for: .horizontal)
+        stackView.arrangedSubviews[1].setContentHuggingPriority(.defaultLow, for: .horizontal)
+
         
         switch type {
         case .email:
+            iconImageView.image = UIImage(systemName: "person.crop.circle.fill", withConfiguration: UIImage.SymbolConfiguration(pointSize: 12))
             textField.placeholder = "Email"
             textField.textContentType = .emailAddress
             textField.autocapitalizationType = .none
         case .password:
+            iconImageView.image = UIImage(systemName: "lock.fill", withConfiguration: UIImage.SymbolConfiguration(pointSize: 12))
             textField.placeholder = "Password"
             textField.textContentType = .password
             textField.autocapitalizationType = .none
             textField.autocorrectionType = .no
             textField.isSecureTextEntry = true
             
-            peekButton = UIButton()
-            peekButton!.setImage(UIImage(systemName: "eye.slash.fill"), for: .normal)
-            peekButton!.tintColor = .label
-            peekButton!.addTarget(self, action: #selector(peekPasswordTapped(_:)), for: .touchDown)
+            let peekButton = UIButton()
+            peekButton.tintColor = .label
+            peekButton.addTarget(self, action: #selector(peekPasswordTapped(_:)), for: .touchDown)
+            peekButton.setImage(UIImage(systemName: "eye.slash.fill", withConfiguration: UIImage.SymbolConfiguration(pointSize: 12)),
+                                for: .normal)
 
-            stackView.addArrangedSubview(peekButton!)
-            stackView.arrangedSubviews[0].setContentHuggingPriority(.defaultLow, for: .horizontal)
-            stackView.arrangedSubviews[1].setContentHuggingPriority(.defaultHigh, for: .horizontal)
+            stackView.addArrangedSubview(peekButton)
+            stackView.arrangedSubviews[2].setContentHuggingPriority(.defaultHigh, for: .horizontal)
+            stackView.arrangedSubviews[1].setContentCompressionResistancePriority(.defaultLow, for: .horizontal)
+            stackView.arrangedSubviews[2].setContentCompressionResistancePriority(.defaultHigh, for: .horizontal)
         case .default:
             textField.placeholder = "Text Field"
         }
-                
-//        animateTextField()
     }
 
 
@@ -104,25 +114,16 @@ class LoginTextView: UIView {
                                      view.trailingAnchor.constraint(equalTo: trailingAnchor)])
     }
     
-    @objc private func peekPasswordTapped(_ recognizer: UITapGestureRecognizer) {
-        guard let peekButton = peekButton else { return }
-
+    @objc private func peekPasswordTapped(_ sender: UIButton) {
         textField.isSecureTextEntry = !textField.isSecureTextEntry
-        peekButton.setImage(!textField.isSecureTextEntry ? UIImage(systemName: "eye.fill") : UIImage(systemName: "eye.slash.fill"), for: .normal)
-
-        //Only fade textField is not in edit mode
-        if !textField.isEditing {
-//            animateTextField()
+        
+        if textField.isSecureTextEntry {
+            sender.setImage(UIImage(systemName: "eye.slash.fill", withConfiguration: UIImage.SymbolConfiguration(pointSize: 12)), for: .normal)
+        }
+        else {
+            sender.setImage(UIImage(systemName: "eye.fill", withConfiguration: UIImage.SymbolConfiguration(pointSize: 12)), for: .normal)
         }
     }
-    
-//    private func animateTextField() {
-//        alpha = 1.0
-//
-//        UIView.animate(withDuration: 0.25, delay: 3.0, options: [.curveLinear, .allowUserInteraction], animations: {
-//            self.alpha = 0.75
-//        }, completion: nil)
-//    }
 }
 
 
@@ -130,13 +131,10 @@ class LoginTextView: UIView {
     
 extension LoginTextView: UITextFieldDelegate {
     func textFieldDidBeginEditing(_ textField: UITextField) {
-//        alpha = 1.0
         layer.shadowOpacity = 0.3
     }
 
     func textFieldDidEndEditing(_ textField: UITextField) {
-//        animateTextField()
-
         UIView.animate(withDuration: 0.25, delay: 0, options: [.curveLinear, .allowUserInteraction], animations: {
             self.layer.shadowOpacity = 0.0
         }, completion: nil)
