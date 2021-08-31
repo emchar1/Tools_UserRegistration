@@ -45,8 +45,8 @@ class LoginTextView: UIView {
         layer.cornerRadius = 4.0
 
         layer.shadowColor = UIColor.black.cgColor
-        layer.shadowOpacity = 0.2
-        layer.shadowOffset = CGSize(width: 2.5, height: 2.5)
+        layer.shadowOpacity = 0.0
+        layer.shadowOffset = CGSize(width: 5, height: 5)
         layer.shadowRadius = 5.0
         
         let padding: CGFloat = 8.0
@@ -90,11 +90,11 @@ class LoginTextView: UIView {
             textField.placeholder = "Text Field"
         }
                 
-        animateTextField()
+//        animateTextField()
     }
 
 
-    // MARK: - Methods
+    // MARK: - Functions
     
     func setConstraints(in view: UIView) {
         translatesAutoresizingMaskIntoConstraints = false
@@ -112,17 +112,17 @@ class LoginTextView: UIView {
 
         //Only fade textField is not in edit mode
         if !textField.isEditing {
-            animateTextField()
+//            animateTextField()
         }
     }
     
-    private func animateTextField() {
-        alpha = 1.0
-
-        UIView.animate(withDuration: 0.25, delay: 3.0, options: [.curveLinear, .allowUserInteraction], animations: {
-            self.alpha = 0.75
-        }, completion: nil)
-    }
+//    private func animateTextField() {
+//        alpha = 1.0
+//
+//        UIView.animate(withDuration: 0.25, delay: 3.0, options: [.curveLinear, .allowUserInteraction], animations: {
+//            self.alpha = 0.75
+//        }, completion: nil)
+//    }
 }
 
 
@@ -130,11 +130,16 @@ class LoginTextView: UIView {
     
 extension LoginTextView: UITextFieldDelegate {
     func textFieldDidBeginEditing(_ textField: UITextField) {
-        alpha = 1.0
+//        alpha = 1.0
+        layer.shadowOpacity = 0.3
     }
 
     func textFieldDidEndEditing(_ textField: UITextField) {
-        animateTextField()
+//        animateTextField()
+
+        UIView.animate(withDuration: 0.25, delay: 0, options: [.curveLinear, .allowUserInteraction], animations: {
+            self.layer.shadowOpacity = 0.0
+        }, completion: nil)
     }
 
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {

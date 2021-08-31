@@ -86,8 +86,6 @@ class LoginViewController: UIViewController {
 //        }
     }
     
-    
-    
     @objc private func didTapView(_ recognizer: UITapGestureRecognizer) {
         let tappedLocation = recognizer.location(in: view)
         
@@ -98,29 +96,29 @@ class LoginViewController: UIViewController {
     
     @objc private func didPressSignIn(_ sender: UIButton) {
         view.endEditing(true)
-        didCheckSignIn()
+        attemptLogin()
     }
     
-    private func didCheckSignIn() {
+    private func attemptLogin() {
         guard emailField.textField.text!.count > 0 else {
-            didCheckSignInAlert(message: "Email cannot be blank!")
+            loginAlert(message: "Email cannot be blank!")
             emailField.textField.becomeFirstResponder()
             return
         }
         
         guard passwordField.textField.text!.count > 0 else {
-            didCheckSignInAlert(message: "Password cannot be blank!")
+            loginAlert(message: "Password cannot be blank!")
             passwordField.textField.becomeFirstResponder()
             return
         }
 
         guard isValidEmailAddress(emailField.textField.text!) else {
-            didCheckSignInAlert(message: "Email address is invalid! Double-check your email and resubmit.")
+            loginAlert(message: "Email address is invalid! Double-check your email and resubmit.")
             emailField.textField.becomeFirstResponder()
             return
         }
         
-
+        //...and finally login via Firebase/Auth
         Auth.auth().signIn(withEmail: emailField.textField.text!, password: passwordField.textField.text!) { (authResult, error) in
             guard error == nil else {
                 self.performSegue(withIdentifier: "segueFail", sender: nil)
@@ -134,7 +132,7 @@ class LoginViewController: UIViewController {
         }
     }
         
-    private func didCheckSignInAlert(message: String) {
+    private func loginAlert(message: String) {
         alertLabel.text = message
         alertLabel.alpha = 1.0
         
@@ -143,6 +141,9 @@ class LoginViewController: UIViewController {
         }, completion: nil)
     }
 }
+
+
+// MARK: - LoginTextViewDelegate
 
 extension LoginViewController: LoginTextViewDelegate {
     func didPressReturn(_ view: LoginTextView) {
@@ -156,7 +157,7 @@ extension LoginViewController: LoginTextViewDelegate {
                 emailField.textField.becomeFirstResponder()
             }
             else {
-                didCheckSignIn()
+                attemptLogin()
             }
         }
     }

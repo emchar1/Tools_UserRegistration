@@ -7,6 +7,7 @@
 
 import Foundation
 
+// MARK: - isValidEmailAddress
 
 func isValidEmailAddress(_ emailAddressString: String) -> Bool {
     var returnValue = true
