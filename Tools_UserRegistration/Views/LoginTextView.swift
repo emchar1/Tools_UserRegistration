@@ -131,7 +131,7 @@ class LoginTextView: UIView {
     
 extension LoginTextView: UITextFieldDelegate {
     func textFieldDidBeginEditing(_ textField: UITextField) {
-        layer.shadowOpacity = 0.3
+        layer.shadowOpacity = 0.5
     }
 
     func textFieldDidEndEditing(_ textField: UITextField) {
