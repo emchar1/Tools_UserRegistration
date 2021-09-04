@@ -15,6 +15,9 @@
 		EA0E050126D1DA1800DAFCB5 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = EA0E050026D1DA1800DAFCB5 /* Assets.xcassets */; };
 		EA0E050426D1DA1800DAFCB5 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EA0E050226D1DA1800DAFCB5 /* LaunchScreen.storyboard */; };
 		EA65A5A926DD5AA300EB14C9 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = EA65A5A826DD5AA300EB14C9 /* GoogleService-Info.plist */; };
+		EA65A5AB26E2089B00EB14C9 /* RegisterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA65A5AA26E2089B00EB14C9 /* RegisterViewController.swift */; };
+		EA65A5AD26E3354700EB14C9 /* AnimationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA65A5AC26E3354700EB14C9 /* AnimationController.swift */; };
+		EA65A5AF26E41F1A00EB14C9 /* CustomButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA65A5AE26E41F1A00EB14C9 /* CustomButton.swift */; };
 		EAF7F53626D4C4C900FE50E1 /* LoginTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAF7F53526D4C4C900FE50E1 /* LoginTextView.swift */; };
 		EAF7F53926DB7B6B00FE50E1 /* K.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAF7F53826DB7B6B00FE50E1 /* K.swift */; };
 /* End PBXBuildFile section */
@@ -32,6 +35,9 @@
 		EA0E050326D1DA1800DAFCB5 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		EA0E050526D1DA1800DAFCB5 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		EA65A5A826DD5AA300EB14C9 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		EA65A5AA26E2089B00EB14C9 /* RegisterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = RegisterViewController.swift; path = Tools_UserRegistration/Controllers/RegisterViewController.swift; sourceTree = SOURCE_ROOT; };
+		EA65A5AC26E3354700EB14C9 /* AnimationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnimationController.swift; sourceTree = "<group>"; };
+		EA65A5AE26E41F1A00EB14C9 /* CustomButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomButton.swift; sourceTree = "<group>"; };
 		EAF7F53526D4C4C900FE50E1 /* LoginTextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginTextView.swift; sourceTree = "<group>"; };
 		EAF7F53826DB7B6B00FE50E1 /* K.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = K.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -103,6 +109,7 @@
 			isa = PBXGroup;
 			children = (
 				EAF7F53526D4C4C900FE50E1 /* LoginTextView.swift */,
+				EA65A5AE26E41F1A00EB14C9 /* CustomButton.swift */,
 				EA0E04FD26D1DA1600DAFCB5 /* Main.storyboard */,
 			);
 			path = Views;
@@ -111,7 +118,9 @@
 		EA0E050D26D1DA3900DAFCB5 /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				EA65A5AA26E2089B00EB14C9 /* RegisterViewController.swift */,
 				EA0E04FB26D1DA1600DAFCB5 /* LoginViewController.swift */,
+				EA65A5AC26E3354700EB14C9 /* AnimationController.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -250,6 +259,9 @@
 				EA0E04FC26D1DA1600DAFCB5 /* LoginViewController.swift in Sources */,
 				EAF7F53626D4C4C900FE50E1 /* LoginTextView.swift in Sources */,
 				EAF7F53926DB7B6B00FE50E1 /* K.swift in Sources */,
+				EA65A5AB26E2089B00EB14C9 /* RegisterViewController.swift in Sources */,
+				EA65A5AF26E41F1A00EB14C9 /* CustomButton.swift in Sources */,
+				EA65A5AD26E3354700EB14C9 /* AnimationController.swift in Sources */,
 				EA0E04F826D1DA1600DAFCB5 /* AppDelegate.swift in Sources */,
 				EA0E04FA26D1DA1600DAFCB5 /* SceneDelegate.swift in Sources */,
 			);

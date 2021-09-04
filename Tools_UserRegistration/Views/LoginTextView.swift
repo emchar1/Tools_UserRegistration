@@ -41,8 +41,8 @@ class LoginTextView: UIView {
 
     private func setup() {
         backgroundColor = .systemBackground
-        layer.cornerRadius = 4.0
 
+        layer.cornerRadius = 4.0
         layer.shadowColor = UIColor.black.cgColor
         layer.shadowOpacity = 0.0
         layer.shadowOffset = CGSize(width: 5, height: 5)

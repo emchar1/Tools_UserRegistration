@@ -13,10 +13,16 @@ class LoginViewController: UIViewController {
     
     // MARK: - Properties
     
+    enum ButtonTag: Int {
+        case signIn = 0, register = 1
+    }
+
     let emailField = LoginTextView()
     let passwordField = LoginTextView(type: .password)
     let fbLoginButton = FBLoginButton()
-    
+    let signInButton = CustomButton(color: .systemBlue, title: "Sign In", tag: ButtonTag.signIn.rawValue)
+    let registerButton = CustomButton(color: .systemGreen, title: "R", tag: ButtonTag.register.rawValue)
+        
     let alertLabel: UILabel = {
         let label = UILabel()
         label.font = UIFont(name: "Avenir", size: 15)
@@ -28,16 +34,6 @@ class LoginViewController: UIViewController {
         label.numberOfLines = 0
         label.alpha = 0
         return label
-    }()
-
-    let signInButton: UIButton = {
-        let button = UIButton(type: .system)
-        button.layer.cornerRadius = 15
-        button.backgroundColor = .blue
-        button.setTitle("Sign In", for: .normal)
-        button.setTitleColor(.white, for: .normal)
-        button.addTarget(self, action: #selector(didPressSignIn(_:)), for: .touchUpInside)
-        return button
     }()
 
     let stackView: UIStackView = {
@@ -52,6 +48,7 @@ class LoginViewController: UIViewController {
     }()
     
     
+    
     // MARK: - Functions
         
     override func viewDidLoad() {
@@ -59,7 +56,10 @@ class LoginViewController: UIViewController {
         
         emailField.delegate = self
         passwordField.delegate = self
-        emailField.textField.becomeFirstResponder()
+        signInButton.delegate = self
+        registerButton.delegate = self
+        
+//        emailField.textField.becomeFirstResponder()
 
         view.backgroundColor = UIColor(named: "colorBackgroundView")
         view.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(didTapView(_:))))
@@ -75,10 +75,16 @@ class LoginViewController: UIViewController {
         stackView.addArrangedSubview(passwordField)
         passwordField.setConstraints(in: stackView.arrangedSubviews[1])
         stackView.addArrangedSubview(signInButton)
+        signInButton.setConstraints(in: stackView.arrangedSubviews[1], width: 100, height: 60)
         stackView.addArrangedSubview(alertLabel)
-        stackView.addArrangedSubview(fbLoginButton)
-        stackView.addArrangedSubview(FBLoginButton())
-        stackView.addArrangedSubview(FBLoginButton())
+                
+        view.addSubview(registerButton)
+        registerButton.setConstraints(in: view, width: 60, height: 60, bottom: 20, trailing: 20)
+
+        
+//        stackView.addArrangedSubview(fbLoginButton)
+//        stackView.addArrangedSubview(FBLoginButton())
+//        stackView.addArrangedSubview(FBLoginButton())
         
 //        //Observe access token changes. this will trigger after successfully login/logout
 //        NotificationCenter.default.addObserver(forName: .AccessTokenDidChange, object: nil, queue: OperationQueue.main) { notification in
@@ -92,11 +98,6 @@ class LoginViewController: UIViewController {
         if (tappedLocation.y < stackView.frame.origin.y) || (tappedLocation.y > stackView.arrangedSubviews[1].frame.origin.y + stackView.arrangedSubviews[1].frame.height) {
             view.endEditing(true)
         }
-    }
-    
-    @objc private func didPressSignIn(_ sender: UIButton) {
-        view.endEditing(true)
-        attemptLogin()
     }
     
     private func attemptLogin() {
@@ -161,6 +162,43 @@ extension LoginViewController: LoginTextViewDelegate {
             }
         }
     }
+}
+
+
+// MARK: - Custom Button Delegate
+
+extension LoginViewController: CustomButtonDelegate {
+    func buttonPressed(_ button: UIButton) {
+        switch button.tag {
+        case ButtonTag.signIn.rawValue:
+            view.endEditing(true)
+            attemptLogin()
+        case ButtonTag.register.rawValue:
+            guard let destinationVC = storyboard?.instantiateViewController(withIdentifier: "registerVC") as? RegisterViewController else {
+                return
+            }
+            
+            destinationVC.transitioningDelegate = self
+            destinationVC.modalPresentationStyle = .fullScreen
+            present(destinationVC, animated: true, completion: nil)
+        default:
+            print("Unknown button")
+        }
+    }
+}
+
+
+
+// MARK: - Animation Transition Delegate
+
+extension LoginViewController: UIViewControllerTransitioningDelegate {
+    func animationController(forPresented presented: UIViewController,
+                             presenting: UIViewController,
+                             source: UIViewController) -> UIViewControllerAnimatedTransitioning? {
+        return AnimationController(animationDuration: 3.5, animationType: .present)
+    }
     
-    
+    func animationController(forDismissed dismissed: UIViewController) -> UIViewControllerAnimatedTransitioning? {
+        return AnimationController(animationDuration: 3.5, animationType: .dismiss)
+    }
 }

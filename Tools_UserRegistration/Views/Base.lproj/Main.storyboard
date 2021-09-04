@@ -8,12 +8,31 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
+        <!--Register View Controller-->
+        <scene sceneID="8Pf-cM-zef">
+            <objects>
+                <viewController storyboardIdentifier="registerVC" id="hEu-nK-bca" customClass="RegisterViewController" customModule="Tools_UserRegistration" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="0oY-8e-alf">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="842"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <viewLayoutGuide key="safeArea" id="7Sl-rh-SSQ"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                    </view>
+                    <navigationItem key="navigationItem" id="kmy-X8-ifI"/>
+                    <connections>
+                        <segue destination="BYZ-38-t0r" kind="presentation" identifier="segueLogin" modalTransitionStyle="flipHorizontal" id="hMZ-Fg-4dM"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="pIt-En-NRy" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="13" y="1209"/>
+        </scene>
         <!--Login View Controller-->
         <scene sceneID="tne-QT-ifu">
             <objects>
-                <viewController id="BYZ-38-t0r" customClass="LoginViewController" customModule="Tools_UserRegistration" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="loginVC" id="BYZ-38-t0r" customClass="LoginViewController" customModule="Tools_UserRegistration" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="842"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
@@ -21,6 +40,7 @@
                     <connections>
                         <segue destination="HP1-3Z-se6" kind="show" identifier="segueSuccess" id="QmZ-9L-LfQ"/>
                         <segue destination="o36-78-gS8" kind="show" identifier="segueFail" id="aWG-nF-1k4"/>
+                        <segue destination="hEu-nK-bca" kind="presentation" identifier="segueRegister" modalTransitionStyle="flipHorizontal" id="DAD-Hc-z6J"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
@@ -53,7 +73,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="cvO-1I-xR1" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="13" y="903"/>
+            <point key="canvasLocation" x="1096" y="425"/>
         </scene>
         <!--View Controller-->
         <scene sceneID="DWd-gC-0t6">
@@ -92,7 +112,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Q9X-6N-DBS" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1097" y="73"/>
+            <point key="canvasLocation" x="1096" y="-360"/>
         </scene>
     </scenes>
     <resources>
