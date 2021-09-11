@@ -131,13 +131,24 @@ class LoginTextView: UIView {
     
 extension LoginTextView: UITextFieldDelegate {
     func textFieldDidBeginEditing(_ textField: UITextField) {
-        layer.shadowOpacity = 0.5
+        layer.shadowOpacity = 0.35
+        layer.borderWidth = 2.0
+
+        let animation = CABasicAnimation(keyPath: "borderColor")
+        animation.fromValue = UIColor.systemPink.cgColor
+        animation.toValue = UIColor.clear.cgColor
+        animation.duration = 1.5
+        animation.repeatCount = .greatestFiniteMagnitude
+        animation.autoreverses = true
+        self.layer.add(animation, forKey: "color")
     }
 
     func textFieldDidEndEditing(_ textField: UITextField) {
         UIView.animate(withDuration: 0.25, delay: 0, options: [.curveLinear, .allowUserInteraction], animations: {
             self.layer.shadowOpacity = 0.0
+            self.layer.borderWidth = 0.0
         }, completion: nil)
+        
     }
 
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {

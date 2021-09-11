@@ -38,50 +38,47 @@ extension AnimationController: UIViewControllerAnimatedTransitioning {
         switch animationType {
         case .present:
             transitionContext.containerView.addSubview(toViewController.view)
-            presentAnimation(with: transitionContext, viewToAnimate: toViewController.view)
+            presentAnimation(with: transitionContext, viewToAnimateTo: toViewController.view, viewToAnimateFrom: fromViewController.view)
         case .dismiss:
             transitionContext.containerView.addSubview(toViewController.view)
             transitionContext.containerView.addSubview(fromViewController.view)
-            dismissAnimation(with: transitionContext, viewToAnimate: fromViewController.view)
+            dismissAnimation(with: transitionContext, viewToAnimateTo: fromViewController.view, viewToAnimateFrom: toViewController.view)
         }
 
     }
     
     //The guts of the animation for presenting
-    private func presentAnimation(with transitionContext: UIViewControllerContextTransitioning, viewToAnimate: UIView) {
+    private func presentAnimation(with transitionContext: UIViewControllerContextTransitioning,
+                                  viewToAnimateTo: UIView, viewToAnimateFrom: UIView) {
         let duration = transitionDuration(using: transitionContext)
 
-        viewToAnimate.clipsToBounds = true
-        viewToAnimate.transform = CGAffineTransform(scaleX: 0, y: 0)
+        viewToAnimateTo.clipsToBounds = true
+        viewToAnimateTo.transform = CGAffineTransform(rotationAngle: .pi)
+        viewToAnimateTo.alpha = 0.0
         
-        UIView.animate(withDuration: duration,
-                       delay: 0,
-                       usingSpringWithDamping: 0.8,
-                       initialSpringVelocity: 0.1,
-                       options: .curveEaseInOut)
-        {
-            viewToAnimate.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+        UIView.animate(withDuration: duration, delay: 0, options: .curveEaseInOut) {
+            viewToAnimateTo.transform = CGAffineTransform(rotationAngle: 0)
+            viewToAnimateTo.alpha = 1.0
+            viewToAnimateFrom.transform = CGAffineTransform(rotationAngle: .pi)
+            viewToAnimateFrom.alpha = 0.0
         } completion: { _ in
             transitionContext.completeTransition(true)
         }
     }
     
     //The guts of the animation for dismissal
-    private func dismissAnimation(with transitionContext: UIViewControllerContextTransitioning, viewToAnimate: UIView) {
+    private func dismissAnimation(with transitionContext: UIViewControllerContextTransitioning,
+                                  viewToAnimateTo: UIView, viewToAnimateFrom: UIView) {
         let duration = transitionDuration(using: transitionContext)
-        let scaleDown = CGAffineTransform(scaleX: 0.3, y: 0.3)
-        let moveOut = CGAffineTransform(translationX: -viewToAnimate.frame.width, y: 0)
-        
-        
-        UIView.animateKeyframes(withDuration: duration, delay: 0, options: .calculationModeLinear) {
-            UIView.addKeyframe(withRelativeStartTime: 0, relativeDuration: 0.7) {
-                viewToAnimate.transform = scaleDown
-            }
-            
-            UIView.addKeyframe(withRelativeStartTime: 3.0 / duration, relativeDuration: 1.0) {
-                viewToAnimate.transform = scaleDown.concatenating(moveOut)
-                viewToAnimate.alpha = 0.0
-            }
+
+        viewToAnimateTo.clipsToBounds = true
+        viewToAnimateTo.transform = CGAffineTransform(rotationAngle: -2 * .pi)
+
+        UIView.animate(withDuration: duration, delay: 0, options: .curveEaseInOut) {
+            viewToAnimateTo.transform = CGAffineTransform(rotationAngle: .pi)
+            viewToAnimateTo.alpha = 0.0
+            viewToAnimateFrom.transform = CGAffineTransform(rotationAngle: 0)
+            viewToAnimateFrom.alpha = 1.0
         } completion: { _ in
             transitionContext.completeTransition(true)
         }

@@ -17,21 +17,36 @@ class CustomButton: UIButton {
     
     init(color: UIColor, title: String, tag: Int = 0) {
         super.init(frame: .zero)
-        
+
         self.tag = tag
         layer.cornerRadius = 30
         backgroundColor = color
         setTitle(title, for: .normal)
         setTitleColor(.white, for: .normal)
+        layer.shadowColor = UIColor.black.cgColor
+        layer.shadowOffset = CGSize(width: 2.5, height: 2.5)
+        layer.shadowOpacity = 0.25
         addTarget(self, action: #selector(didPressButton(_:)), for: .touchUpInside)
+        addTarget(self, action: #selector(didTouchDown(_:)), for: .touchDown)
+        addTarget(self, action: #selector(didTouchUp(_:)), for: .touchUpOutside)
+        addTarget(self, action: #selector(didTouchUp(_:)), for: .touchCancel)
     }
-    
+        
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
     @objc private func didPressButton(_ sender: UIButton) {
         delegate?.buttonPressed(self)
+        setTitleColor(.white, for: .normal)
+    }
+    
+    @objc private func didTouchDown(_ sender: UIButton) {
+        setTitleColor(.lightGray, for: .normal)
+    }
+    
+    @objc private func didTouchUp(_ sender: UIButton) {
+        setTitleColor(.white, for: .normal)
     }
     
     func setConstraints(in view: UIView,
