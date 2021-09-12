@@ -34,6 +34,7 @@ extension AnimationController: UIViewControllerAnimatedTransitioning {
             return
         }
         
+        toViewController.view.alpha = 0
         
         switch animationType {
         case .present:
@@ -50,13 +51,27 @@ extension AnimationController: UIViewControllerAnimatedTransitioning {
     //The guts of the animation for presenting
     private func presentAnimation(with transitionContext: UIViewControllerContextTransitioning,
                                   viewToAnimateTo: UIView, viewToAnimateFrom: UIView) {
-        let duration = transitionDuration(using: transitionContext)
+        
+        animationSlideUp(with: transitionContext, viewToAnimateTo: viewToAnimateTo, viewToAnimateFrom: viewToAnimateFrom)
+    }
+    
+    //The guts of the animation for dismissal
+    private func dismissAnimation(with transitionContext: UIViewControllerContextTransitioning,
+                                  viewToAnimateTo: UIView, viewToAnimateFrom: UIView) {
 
+        animationSlideUp(with: transitionContext, viewToAnimateTo: viewToAnimateFrom, viewToAnimateFrom: viewToAnimateTo, reverse: true)
+    }
+    
+    
+    // MARK: - Custom Animations
+    
+    private func animationSpin(with transitionContext: UIViewControllerContextTransitioning,
+                               viewToAnimateTo: UIView, viewToAnimateFrom: UIView) {
+        
         viewToAnimateTo.clipsToBounds = true
         viewToAnimateTo.transform = CGAffineTransform(rotationAngle: .pi)
-        viewToAnimateTo.alpha = 0.0
         
-        UIView.animate(withDuration: duration, delay: 0, options: .curveEaseInOut) {
+        UIView.animate(withDuration: transitionDuration(using: transitionContext), delay: 0, options: .curveEaseInOut) {
             viewToAnimateTo.transform = CGAffineTransform(rotationAngle: 0)
             viewToAnimateTo.alpha = 1.0
             viewToAnimateFrom.transform = CGAffineTransform(rotationAngle: .pi)
@@ -66,21 +81,19 @@ extension AnimationController: UIViewControllerAnimatedTransitioning {
         }
     }
     
-    //The guts of the animation for dismissal
-    private func dismissAnimation(with transitionContext: UIViewControllerContextTransitioning,
-                                  viewToAnimateTo: UIView, viewToAnimateFrom: UIView) {
-        let duration = transitionDuration(using: transitionContext)
-
+    private func animationSlideUp(with transitionContext: UIViewControllerContextTransitioning,
+                                  viewToAnimateTo: UIView, viewToAnimateFrom: UIView, reverse: Bool = false) {
+        
         viewToAnimateTo.clipsToBounds = true
-        viewToAnimateTo.transform = CGAffineTransform(rotationAngle: -2 * .pi)
-
-        UIView.animate(withDuration: duration, delay: 0, options: .curveEaseInOut) {
-            viewToAnimateTo.transform = CGAffineTransform(rotationAngle: .pi)
-            viewToAnimateTo.alpha = 0.0
-            viewToAnimateFrom.transform = CGAffineTransform(rotationAngle: 0)
-            viewToAnimateFrom.alpha = 1.0
+        viewToAnimateTo.alpha = 1.0
+        viewToAnimateTo.transform = CGAffineTransform(translationX: 0, y: viewToAnimateTo.frame.height * (reverse ? -1 : 1))
+        
+        UIView.animate(withDuration: transitionDuration(using: transitionContext), delay: 0, options: .curveEaseIn) {
+            viewToAnimateTo.transform = CGAffineTransform(translationX: 0, y: 0)
+            viewToAnimateFrom.transform = CGAffineTransform(translationX: 0, y: viewToAnimateTo.frame.height * (reverse ? 1 : -1))
         } completion: { _ in
             transitionContext.completeTransition(true)
         }
+
     }
 }
