@@ -195,10 +195,10 @@ extension LoginViewController: UIViewControllerTransitioningDelegate {
     func animationController(forPresented presented: UIViewController,
                              presenting: UIViewController,
                              source: UIViewController) -> UIViewControllerAnimatedTransitioning? {
-        return AnimationController(animationDuration: 0.5, animationType: .present)
+        return AnimationController(animationDuration: 1.0, animationType: .present)
     }
     
     func animationController(forDismissed dismissed: UIViewController) -> UIViewControllerAnimatedTransitioning? {
-        return AnimationController(animationDuration: 0.5, animationType: .dismiss)
+        return AnimationController(animationDuration: 1.0, animationType: .dismiss)
     }
 }

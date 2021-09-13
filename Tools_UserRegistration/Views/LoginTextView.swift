@@ -80,6 +80,7 @@ class LoginTextView: UIView {
             textField.placeholder = "Email"
             textField.textContentType = .emailAddress
             textField.autocapitalizationType = .none
+            textField.autocorrectionType = .no
         case .password:
             iconImageView.image = UIImage(systemName: "lock.fill", withConfiguration: UIImage.SymbolConfiguration(pointSize: 12))
             textField.placeholder = "Password"

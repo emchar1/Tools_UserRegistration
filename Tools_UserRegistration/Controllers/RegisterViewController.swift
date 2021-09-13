@@ -17,17 +17,17 @@ class RegisterViewController: UIViewController {
         view.addSubview(loginButton)
         loginButton.setConstraints(in: view, width: 60, height: 60, bottom: 20, trailing: 20)
         
-        let label = UILabel()
-        label.text = "Register Page"
-        label.textAlignment = .center
-        label.font = UIFont(name: "Avenir", size: 24.0)
-        label.textColor = .white
-        view.addSubview(label)
-        
-        NSLayoutConstraint.activate([label.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-                                     label.centerYAnchor.constraint(equalTo: view.centerYAnchor),
-                                     label.widthAnchor.constraint(equalToConstant: 300),
-                                     label.heightAnchor.constraint(equalToConstant: 100)])
+//        let label = UILabel()
+//        label.text = "Register Page"
+//        label.textAlignment = .center
+//        label.font = UIFont(name: "Avenir", size: 24.0)
+//        label.textColor = .white
+//        view.addSubview(label)
+//        
+//        NSLayoutConstraint.activate([label.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+//                                     label.centerYAnchor.constraint(equalTo: view.centerYAnchor),
+//                                     label.widthAnchor.constraint(equalToConstant: 300),
+//                                     label.heightAnchor.constraint(equalToConstant: 100)])
     }
 }
 
