@@ -53,7 +53,7 @@ class LoginViewController: UIViewController {
         
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+                
         emailField.delegate = self
         passwordField.delegate = self
         signInButton.delegate = self
@@ -90,6 +90,9 @@ class LoginViewController: UIViewController {
 //        NotificationCenter.default.addObserver(forName: .AccessTokenDidChange, object: nil, queue: OperationQueue.main) { notification in
 //            print("*******FB Access Token: \(String(describing: AccessToken.current?.tokenString))")
 //        }
+        
+        registerForKeyboardNotifications()
+
     }
     
     @objc private func didTapView(_ recognizer: UITapGestureRecognizer) {
@@ -195,10 +198,42 @@ extension LoginViewController: UIViewControllerTransitioningDelegate {
     func animationController(forPresented presented: UIViewController,
                              presenting: UIViewController,
                              source: UIViewController) -> UIViewControllerAnimatedTransitioning? {
-        return AnimationController(animationDuration: 1.0, animationType: .present)
+        return AnimationController(animationDuration: 0.5, animationType: .present)
     }
     
     func animationController(forDismissed dismissed: UIViewController) -> UIViewControllerAnimatedTransitioning? {
-        return AnimationController(animationDuration: 1.0, animationType: .dismiss)
+        return AnimationController(animationDuration: 0.5, animationType: .dismiss)
+    }
+}
+
+
+// MARK: - Keyboard/View Size Handling
+
+extension LoginViewController {
+    func registerForKeyboardNotifications() {
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(keyboardIsPresenting(_ :)),
+                                               name: UIResponder.keyboardWillShowNotification,
+                                               object: nil)
+        
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(keyboardIsDismissing(_ :)),
+                                               name: UIResponder.keyboardWillHideNotification,
+                                               object: nil)
+    }
+    
+    @objc private func keyboardIsPresenting(_ notification: Notification) {
+        if let keyboardFrame: NSValue = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue {
+            let keyboardHeight = keyboardFrame.cgRectValue.height
+            
+            if view.frame.origin.y > -keyboardHeight / 2 {
+                view.frame.origin.y = -keyboardHeight / 2
+                print(keyboardHeight / 2)
+            }
+        }
+    }
+    
+    @objc private func keyboardIsDismissing(_ notification: Notification) {
+        view.frame.origin.y = 0
     }
 }

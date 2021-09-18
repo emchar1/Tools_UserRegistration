@@ -52,19 +52,26 @@ extension AnimationController: UIViewControllerAnimatedTransitioning {
     private func presentAnimation(with transitionContext: UIViewControllerContextTransitioning,
                                   viewToAnimateTo: UIView, viewToAnimateFrom: UIView) {
         
-        animationSpin3D(x: 0, y: 1, with: transitionContext, viewToAnimateTo: viewToAnimateTo, viewToAnimateFrom: viewToAnimateFrom)
+//        animationSpin3D(x: 0, y: 1, with: transitionContext, viewToAnimateTo: viewToAnimateTo, viewToAnimateFrom: viewToAnimateFrom)
+        
+        animationSpin(with: transitionContext, viewToAnimateTo: viewToAnimateTo, viewToAnimateFrom: viewToAnimateFrom)
     }
     
     //The guts of the animation for dismissal
     private func dismissAnimation(with transitionContext: UIViewControllerContextTransitioning,
                                   viewToAnimateTo: UIView, viewToAnimateFrom: UIView) {
 
-        animationSpin3D(x: 0, y: 1, with: transitionContext, viewToAnimateTo: viewToAnimateFrom, viewToAnimateFrom: viewToAnimateTo)
+//        animationSpin3D(x: 0, y: 1, with: transitionContext, viewToAnimateTo: viewToAnimateFrom, viewToAnimateFrom: viewToAnimateTo)
+        
+        animationSpin(with: transitionContext, viewToAnimateTo: viewToAnimateFrom, viewToAnimateFrom: viewToAnimateTo)
     }
-    
-    
-    // MARK: - Custom Animations
-    
+}
+
+
+
+// MARK: - Custom Animations
+
+extension AnimationController {
     /**
      An animation that rotates the view 180 degrees about the xyz-axes, while transitioning into the next view.
      - parameters:
@@ -109,7 +116,8 @@ extension AnimationController: UIViewControllerAnimatedTransitioning {
         viewToAnimateTo.clipsToBounds = true
         viewToAnimateTo.transform = CGAffineTransform(rotationAngle: .pi)
         
-        UIView.animate(withDuration: transitionDuration(using: transitionContext), delay: 0, options: .curveEaseInOut) {
+        UIView.animate(withDuration: transitionDuration(using: transitionContext), delay: 0,
+                       usingSpringWithDamping: 0.6, initialSpringVelocity: 10.0, options: .curveEaseInOut) {
             viewToAnimateTo.transform = CGAffineTransform(rotationAngle: 0)
             viewToAnimateTo.alpha = 1.0
             viewToAnimateFrom.transform = CGAffineTransform(rotationAngle: .pi)
@@ -183,16 +191,43 @@ extension AnimationController: UIViewControllerAnimatedTransitioning {
         UIView.animate(withDuration: duration / 2, delay: 0, options: .curveEaseOut, animations: {
             viewToAnimateFrom.transform = CGAffineTransform(scaleX: scaleMagnitude, y: scaleMagnitude)
         }, completion: nil)
-        
-        UIView.animate(withDuration: dissolveDuration, delay: dissolveDurationDelay, options: .curveLinear, animations: {
-            viewToAnimateFrom.alpha = 0.0
-            viewToAnimateTo.alpha = 1.0
-        }, completion: nil)
 
         UIView.animate(withDuration: duration / 2, delay: duration / 2,
                        usingSpringWithDamping: 0.2, initialSpringVelocity: 2.0, options: .curveEaseInOut) {
+            viewToAnimateFrom.alpha = 0.0
+            viewToAnimateTo.alpha = 1.0
             viewToAnimateTo.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
         } completion: { _ in
+            transitionContext.completeTransition(true)
+        }
+    }
+    
+    /**
+     An animation that grows/shrinks from the bottom-right corner
+     - parameters:
+        - transitionContext: the UIViewControllerContextTransitioning
+        - viewToAnimateTo: the destination view of the animation
+        - viewToAnimateFrom: the source view of the animation
+     */
+    private func animationGrow(with transitionContext: UIViewControllerContextTransitioning,
+                               viewToAnimateTo: UIView, viewToAnimateFrom: UIView) {
+
+        let viewSize = viewToAnimateFrom.frame
+        viewToAnimateTo.clipsToBounds = true
+        viewToAnimateTo.transform = CGAffineTransform(scaleX: 0, y: 0)
+        viewToAnimateTo.transform = CGAffineTransform(translationX: viewSize.width - viewToAnimateTo.frame.width, y: viewSize.height - viewToAnimateTo.frame.height)
+        viewToAnimateTo.alpha = 1.0
+        viewToAnimateFrom.alpha = 0
+
+        UIView.animate(withDuration: transitionDuration(using: transitionContext), delay: 0, options: .curveEaseInOut) {
+            viewToAnimateTo.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+            viewToAnimateTo.transform = CGAffineTransform(translationX: 0, y: 0)
+//            viewToAnimateFrom.transform = CGAffineTransform(scaleX: 0, y: 0)
+//            viewToAnimateFrom.alpha = 0.0
+        } completion: { _ in
+            viewToAnimateFrom.alpha = 0
+//            viewToAnimateFrom.transform = CGAffineTransform(scaleX: 0, y: 0)
+//            viewToAnimateFrom.transform = CGAffineTransform(translationX: viewSize.width, y: viewSize.height)
             transitionContext.completeTransition(true)
         }
     }
