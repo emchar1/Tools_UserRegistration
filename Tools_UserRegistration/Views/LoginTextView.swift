@@ -8,11 +8,18 @@
 import UIKit
 
 enum LoginTextType {
-    case email, password, `default`
+    case name, email, password, passwordConfirm, `default`
 }
 
 protocol LoginTextViewDelegate {
     func didPressReturn(_ view: LoginTextView)
+    func didPressPeekPassword(_ view: LoginTextView)
+}
+
+extension LoginTextViewDelegate {
+    func didPressPeekPassword(_ view: LoginTextView) {
+        //do nothing
+    }
 }
 
 
@@ -75,8 +82,14 @@ class LoginTextView: UIView {
 
         
         switch type {
-        case .email:
+        case .name:
             iconImageView.image = UIImage(systemName: "person.crop.circle.fill", withConfiguration: UIImage.SymbolConfiguration(pointSize: 12))
+            textField.placeholder = "Name"
+            textField.textContentType = .name
+            textField.autocapitalizationType = .words
+            textField.autocorrectionType = .default
+        case .email:
+            iconImageView.image = UIImage(systemName: "envelope.fill", withConfiguration: UIImage.SymbolConfiguration(pointSize: 12))
             textField.placeholder = "Email"
             textField.textContentType = .emailAddress
             textField.autocapitalizationType = .none
@@ -99,6 +112,24 @@ class LoginTextView: UIView {
             stackView.arrangedSubviews[2].setContentHuggingPriority(.defaultHigh, for: .horizontal)
             stackView.arrangedSubviews[1].setContentCompressionResistancePriority(.defaultLow, for: .horizontal)
             stackView.arrangedSubviews[2].setContentCompressionResistancePriority(.defaultHigh, for: .horizontal)
+        case .passwordConfirm:
+            iconImageView.image = UIImage(systemName: "lock.fill", withConfiguration: UIImage.SymbolConfiguration(pointSize: 12))
+            textField.placeholder = "Confirm Password"
+            textField.textContentType = .password
+            textField.autocapitalizationType = .none
+            textField.autocorrectionType = .no
+            textField.isSecureTextEntry = true
+            
+//            let peekButton = UIButton()
+//            peekButton.tintColor = .label
+//            peekButton.addTarget(self, action: #selector(peekPasswordTapped(_:)), for: .touchDown)
+//            peekButton.setImage(UIImage(systemName: "eye.slash.fill", withConfiguration: UIImage.SymbolConfiguration(pointSize: 12)),
+//                                for: .normal)
+//
+//            stackView.addArrangedSubview(peekButton)
+//            stackView.arrangedSubviews[2].setContentHuggingPriority(.defaultHigh, for: .horizontal)
+//            stackView.arrangedSubviews[1].setContentCompressionResistancePriority(.defaultLow, for: .horizontal)
+//            stackView.arrangedSubviews[2].setContentCompressionResistancePriority(.defaultHigh, for: .horizontal)
         case .default:
             textField.placeholder = "Text Field"
         }
@@ -124,6 +155,8 @@ class LoginTextView: UIView {
         else {
             sender.setImage(UIImage(systemName: "eye.fill", withConfiguration: UIImage.SymbolConfiguration(pointSize: 12)), for: .normal)
         }
+        
+        delegate?.didPressPeekPassword(self)
     }
 }
 

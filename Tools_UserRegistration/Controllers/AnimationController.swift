@@ -52,18 +52,18 @@ extension AnimationController: UIViewControllerAnimatedTransitioning {
     private func presentAnimation(with transitionContext: UIViewControllerContextTransitioning,
                                   viewToAnimateTo: UIView, viewToAnimateFrom: UIView) {
         
-//        animationSpin3D(x: 0, y: 1, with: transitionContext, viewToAnimateTo: viewToAnimateTo, viewToAnimateFrom: viewToAnimateFrom)
+        animationSpin3D(x: 0, y: 1, with: transitionContext, viewToAnimateTo: viewToAnimateTo, viewToAnimateFrom: viewToAnimateFrom)
         
-        animationSpin(with: transitionContext, viewToAnimateTo: viewToAnimateTo, viewToAnimateFrom: viewToAnimateFrom)
+//        animationSpin(with: transitionContext, viewToAnimateTo: viewToAnimateTo, viewToAnimateFrom: viewToAnimateFrom)
     }
     
     //The guts of the animation for dismissal
     private func dismissAnimation(with transitionContext: UIViewControllerContextTransitioning,
                                   viewToAnimateTo: UIView, viewToAnimateFrom: UIView) {
 
-//        animationSpin3D(x: 0, y: 1, with: transitionContext, viewToAnimateTo: viewToAnimateFrom, viewToAnimateFrom: viewToAnimateTo)
+        animationSpin3D(x: 0, y: 1, with: transitionContext, viewToAnimateTo: viewToAnimateFrom, viewToAnimateFrom: viewToAnimateTo)
         
-        animationSpin(with: transitionContext, viewToAnimateTo: viewToAnimateFrom, viewToAnimateFrom: viewToAnimateTo)
+//        animationSpin(with: transitionContext, viewToAnimateTo: viewToAnimateFrom, viewToAnimateFrom: viewToAnimateTo)
     }
 }
 
@@ -116,8 +116,7 @@ extension AnimationController {
         viewToAnimateTo.clipsToBounds = true
         viewToAnimateTo.transform = CGAffineTransform(rotationAngle: .pi)
         
-        UIView.animate(withDuration: transitionDuration(using: transitionContext), delay: 0,
-                       usingSpringWithDamping: 0.6, initialSpringVelocity: 10.0, options: .curveEaseInOut) {
+        UIView.animate(withDuration: transitionDuration(using: transitionContext), delay: 0, options: .curveEaseInOut) {
             viewToAnimateTo.transform = CGAffineTransform(rotationAngle: 0)
             viewToAnimateTo.alpha = 1.0
             viewToAnimateFrom.transform = CGAffineTransform(rotationAngle: .pi)

@@ -108,8 +108,8 @@
 		EA0E050C26D1DA3400DAFCB5 /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				EAF7F53526D4C4C900FE50E1 /* LoginTextView.swift */,
 				EA65A5AE26E41F1A00EB14C9 /* CustomButton.swift */,
+				EAF7F53526D4C4C900FE50E1 /* LoginTextView.swift */,
 				EA0E04FD26D1DA1600DAFCB5 /* Main.storyboard */,
 			);
 			path = Views;

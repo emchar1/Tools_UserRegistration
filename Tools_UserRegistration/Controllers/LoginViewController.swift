@@ -20,8 +20,8 @@ class LoginViewController: UIViewController {
     let emailField = LoginTextView()
     let passwordField = LoginTextView(type: .password)
     let fbLoginButton = FBLoginButton()
-    let signInButton = CustomButton(color: .systemBlue, title: "Sign In", tag: ButtonTag.signIn.rawValue)
-    let registerButton = CustomButton(color: .systemGreen, title: "R", tag: ButtonTag.register.rawValue)
+    let signInButton = CustomButton(color: .systemGreen, title: "Sign In", tag: ButtonTag.signIn.rawValue)
+    let registerButton = CustomButton(color: .systemPink, title: "Register", tag: ButtonTag.register.rawValue)
         
     let alertLabel: UILabel = {
         let label = UILabel()
@@ -47,6 +47,16 @@ class LoginViewController: UIViewController {
         return stackView
     }()
     
+    let subStackView: UIStackView = {
+        let stackView = UIStackView()
+        stackView.distribution = .fillEqually
+        stackView.alignment = .fill
+        stackView.axis = .horizontal
+        stackView.spacing = 20
+        stackView.backgroundColor = .clear
+        stackView.translatesAutoresizingMaskIntoConstraints = false
+        return stackView
+    }()
     
     
     // MARK: - Functions
@@ -61,7 +71,7 @@ class LoginViewController: UIViewController {
         
 //        emailField.textField.becomeFirstResponder()
 
-        view.backgroundColor = UIColor(named: "colorBackgroundView")
+        view.backgroundColor = UIColor(named: "colorLoginView")
         view.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(didTapView(_:))))
         view.addSubview(stackView)
         
@@ -72,14 +82,20 @@ class LoginViewController: UIViewController {
         
         stackView.addArrangedSubview(emailField)
         emailField.setConstraints(in: stackView.arrangedSubviews[0])
+
         stackView.addArrangedSubview(passwordField)
         passwordField.setConstraints(in: stackView.arrangedSubviews[1])
-        stackView.addArrangedSubview(signInButton)
-        signInButton.setConstraints(in: stackView.arrangedSubviews[1], width: 100, height: 60)
+
+        subStackView.addArrangedSubview(signInButton)
+        subStackView.addArrangedSubview(registerButton)
+        stackView.addArrangedSubview(subStackView)
+        signInButton.setConstraints(in: stackView.arrangedSubviews[2], width: view.frame.width / 2, height: 60)
+        registerButton.setConstraints(in: stackView.arrangedSubviews[2], width: view.frame.width / 2, height: 60)
+
         stackView.addArrangedSubview(alertLabel)
                 
-        view.addSubview(registerButton)
-        registerButton.setConstraints(in: view, width: 60, height: 60, bottom: 20, trailing: 20)
+//        view.addSubview(registerButton)
+//        registerButton.setConstraints(in: view, width: 60, height: 60, bottom: 20, trailing: 20)
 
         
 //        stackView.addArrangedSubview(fbLoginButton)
@@ -92,7 +108,6 @@ class LoginViewController: UIViewController {
 //        }
         
         registerForKeyboardNotifications()
-
     }
     
     @objc private func didTapView(_ recognizer: UITapGestureRecognizer) {
@@ -124,12 +139,13 @@ class LoginViewController: UIViewController {
         
         //...and finally login via Firebase/Auth
         Auth.auth().signIn(withEmail: emailField.textField.text!, password: passwordField.textField.text!) { (authResult, error) in
+            self.view.endEditing(true)
+
             guard error == nil else {
                 self.performSegue(withIdentifier: "segueFail", sender: nil)
                 print(error!.localizedDescription)
                 return
             }
-            
             
             self.performSegue(withIdentifier: "segueSuccess", sender: nil)
             print("Login successful!")
@@ -152,10 +168,11 @@ class LoginViewController: UIViewController {
 extension LoginViewController: LoginTextViewDelegate {
     func didPressReturn(_ view: LoginTextView) {
         if view === emailField {
-            view.textField.resignFirstResponder()
+//            view.textField.resignFirstResponder()
             passwordField.textField.becomeFirstResponder()
-        } else if view === passwordField {
-            view.textField.resignFirstResponder()
+        }
+        else if view === passwordField {
+//            view.textField.resignFirstResponder()
             
             if emailField.textField.text!.count <= 0 || passwordField.textField.text!.count <= 0 {
                 emailField.textField.becomeFirstResponder()
@@ -174,7 +191,7 @@ extension LoginViewController: CustomButtonDelegate {
     func buttonPressed(_ button: UIButton) {
         switch button.tag {
         case ButtonTag.signIn.rawValue:
-            view.endEditing(true)
+//            view.endEditing(true)
             attemptLogin()
         case ButtonTag.register.rawValue:
             guard let destinationVC = storyboard?.instantiateViewController(withIdentifier: "registerVC") as? RegisterViewController else {
@@ -225,10 +242,9 @@ extension LoginViewController {
     @objc private func keyboardIsPresenting(_ notification: Notification) {
         if let keyboardFrame: NSValue = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue {
             let keyboardHeight = keyboardFrame.cgRectValue.height
-            
-            if view.frame.origin.y > -keyboardHeight / 2 {
-                view.frame.origin.y = -keyboardHeight / 2
-                print(keyboardHeight / 2)
+
+            if view.frame.origin.y > -keyboardHeight / 4 {
+                view.frame.origin.y = -keyboardHeight / 4
             }
         }
     }
