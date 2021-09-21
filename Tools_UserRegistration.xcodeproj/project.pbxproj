@@ -38,6 +38,7 @@
 		EA65A5AA26E2089B00EB14C9 /* RegisterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = RegisterViewController.swift; path = Tools_UserRegistration/Controllers/RegisterViewController.swift; sourceTree = SOURCE_ROOT; };
 		EA65A5AC26E3354700EB14C9 /* AnimationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnimationController.swift; sourceTree = "<group>"; };
 		EA65A5AE26E41F1A00EB14C9 /* CustomButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomButton.swift; sourceTree = "<group>"; };
+		EADD7D0F26FA4A3600E72BD2 /* Tools_UserRegistration.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Tools_UserRegistration.entitlements; sourceTree = "<group>"; };
 		EAF7F53526D4C4C900FE50E1 /* LoginTextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginTextView.swift; sourceTree = "<group>"; };
 		EAF7F53826DB7B6B00FE50E1 /* K.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = K.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -84,6 +85,7 @@
 		EA0E04F626D1DA1600DAFCB5 /* Tools_UserRegistration */ = {
 			isa = PBXGroup;
 			children = (
+				EADD7D0F26FA4A3600E72BD2 /* Tools_UserRegistration.entitlements */,
 				EAF7F53726DB7B5100FE50E1 /* Tools */,
 				EA0E050B26D1DA2A00DAFCB5 /* Models */,
 				EA0E050C26D1DA3400DAFCB5 /* Views */,
@@ -411,6 +413,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = Tools_UserRegistration/Tools_UserRegistration.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = LZ8V996BTJ;
 				INFOPLIST_FILE = Tools_UserRegistration/Info.plist;
@@ -431,6 +434,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = Tools_UserRegistration/Tools_UserRegistration.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = LZ8V996BTJ;
 				INFOPLIST_FILE = Tools_UserRegistration/Info.plist;

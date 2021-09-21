@@ -18,7 +18,7 @@ protocol LoginTextViewDelegate {
 
 extension LoginTextViewDelegate {
     func didPressPeekPassword(_ view: LoginTextView) {
-        //do nothing
+        //Do nothing. This placeholder function simply suppresses an error if this function isn't overridden in the adopting class.
     }
 }
 

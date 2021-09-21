@@ -60,41 +60,6 @@ class RegisterViewController: UIViewController {
         return stackView
     }()
     
-    
-    
-    
-    
-    
-//    let loginButton = CustomButton(color: .systemYellow, title: "L")
-    
-  /*  override func viewDidLoad() {
-        view.backgroundColor = .systemPurple
-        loginButton.delegate = self
-        
-        view.addSubview(loginButton)
-        loginButton.setConstraints(in: view, width: 60, height: 60, bottom: 20, trailing: 20)
-        
-//        let label = UILabel()
-//        label.text = "Register Page"
-//        label.textAlignment = .center
-//        label.font = UIFont(name: "Avenir", size: 24.0)
-//        label.textColor = .white
-//        view.addSubview(label)
-//        
-//        NSLayoutConstraint.activate([label.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-//                                     label.centerYAnchor.constraint(equalTo: view.centerYAnchor),
-//                                     label.widthAnchor.constraint(equalToConstant: 300),
-//                                     label.heightAnchor.constraint(equalToConstant: 100)])
-    }
-}
-
-
-extension RegisterViewController: CustomButtonDelegate {
-    func buttonPressed(_ button: UIButton) {
-        self.dismiss(animated: true, completion: nil)
-    }
-}
-*/
 
     // MARK: - Functions
         
@@ -108,7 +73,6 @@ extension RegisterViewController: CustomButtonDelegate {
         createUserButton.delegate = self
         goBackButton.delegate = self
         
-//        emailField.textField.becomeFirstResponder()
 
         view.backgroundColor = UIColor(named: "colorRegistrationView")
         view.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(didTapView(_:))))
@@ -134,24 +98,11 @@ extension RegisterViewController: CustomButtonDelegate {
         subStackView.addArrangedSubview(createUserButton)
         subStackView.addArrangedSubview(goBackButton)
         stackView.addArrangedSubview(subStackView)
-        createUserButton.setConstraints(in: stackView.arrangedSubviews[4], width: view.frame.width / 2, height: 60)
-        goBackButton.setConstraints(in: stackView.arrangedSubviews[4], width: view.frame.width / 2, height: 60)
+        createUserButton.setConstraints(in: stackView.arrangedSubviews[4], height: 60)
+        goBackButton.setConstraints(in: stackView.arrangedSubviews[4], height: 60)
 
         stackView.addArrangedSubview(alertLabel)
                 
-//        view.addSubview(registerButton)
-//        registerButton.setConstraints(in: view, width: 60, height: 60, bottom: 20, trailing: 20)
-
-        
-//        stackView.addArrangedSubview(fbLoginButton)
-//        stackView.addArrangedSubview(FBLoginButton())
-//        stackView.addArrangedSubview(FBLoginButton())
-        
-//        //Observe access token changes. this will trigger after successfully login/logout
-//        NotificationCenter.default.addObserver(forName: .AccessTokenDidChange, object: nil, queue: OperationQueue.main) { notification in
-//            print("*******FB Access Token: \(String(describing: AccessToken.current?.tokenString))")
-//        }
-        
         registerForKeyboardNotifications()
     }
     
@@ -194,24 +145,18 @@ extension RegisterViewController: CustomButtonDelegate {
             return
         }
         
-        
-        
-        
-        
-        
-        //CHANGE THIS TO REGISTRATION!!!
-        
-        Auth.auth().signIn(withEmail: emailField.textField.text!, password: passwordField.textField.text!) { (authResult, error) in
-            self.view.endEditing(true)
 
+        //USER REGISTRATION
+        Auth.auth().createUser(withEmail: emailField.textField.text!, password: passwordField.textField.text!) { (authResult, error) in
+            self.view.endEditing(true)
+            
             guard error == nil else {
-                self.performSegue(withIdentifier: "segueFail", sender: nil)
-                print(error!.localizedDescription)
+                print("Error creating user: \(error!.localizedDescription)")
+                self.loginAlert(message: error!.localizedDescription)
                 return
             }
             
-            self.performSegue(withIdentifier: "segueSuccess", sender: nil)
-            print("Login successful!")
+            print("User \(self.emailField.textField.text!) created!")
         }
     }
         
@@ -275,22 +220,6 @@ extension RegisterViewController: CustomButtonDelegate {
         }
     }
 }
-
-
-
-//// MARK: - Animation Transition Delegate
-//
-//extension RegisterViewController: UIViewControllerTransitioningDelegate {
-//    func animationController(forPresented presented: UIViewController,
-//                             presenting: UIViewController,
-//                             source: UIViewController) -> UIViewControllerAnimatedTransitioning? {
-//        return AnimationController(animationDuration: 0.5, animationType: .present)
-//    }
-//    
-//    func animationController(forDismissed dismissed: UIViewController) -> UIViewControllerAnimatedTransitioning? {
-//        return AnimationController(animationDuration: 0.5, animationType: .dismiss)
-//    }
-//}
 
 
 // MARK: - Keyboard/View Size Handling

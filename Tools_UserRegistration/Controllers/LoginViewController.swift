@@ -89,8 +89,8 @@ class LoginViewController: UIViewController {
         subStackView.addArrangedSubview(signInButton)
         subStackView.addArrangedSubview(registerButton)
         stackView.addArrangedSubview(subStackView)
-        signInButton.setConstraints(in: stackView.arrangedSubviews[2], width: view.frame.width / 2, height: 60)
-        registerButton.setConstraints(in: stackView.arrangedSubviews[2], width: view.frame.width / 2, height: 60)
+        signInButton.setConstraints(in: stackView.arrangedSubviews[2], height: 60)
+        registerButton.setConstraints(in: stackView.arrangedSubviews[2], height: 60)
 
         stackView.addArrangedSubview(alertLabel)
                 
