@@ -6,7 +6,7 @@
 //
 
 import UIKit
-import FBSDKLoginKit
+//import FBSDKLoginKit
 import FirebaseAuth
 
 class LoginViewController: UIViewController {
@@ -19,7 +19,7 @@ class LoginViewController: UIViewController {
 
     let emailField = LoginTextView()
     let passwordField = LoginTextView(type: .password)
-    let fbLoginButton = FBLoginButton()
+//    let fbLoginButton = FBLoginButton()
     let signInButton = CustomButton(color: .systemGreen, title: "Sign In", tag: ButtonTag.signIn.rawValue)
     let registerButton = CustomButton(color: .systemPink, title: "Register", tag: ButtonTag.register.rawValue)
         
@@ -181,7 +181,7 @@ extension LoginViewController: LoginTextViewDelegate {
                 attemptLogin()
             }
         }
-    }
+    }    
 }
 
 

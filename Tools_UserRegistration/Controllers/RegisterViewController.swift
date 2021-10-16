@@ -6,7 +6,7 @@
 //
 
 import UIKit
-import FBSDKLoginKit
+//import FBSDKLoginKit
 import FirebaseAuth
 
 
@@ -156,7 +156,21 @@ class RegisterViewController: UIViewController {
                 return
             }
             
-            print("User \(self.emailField.textField.text!) created!")
+            print("User with email \(self.emailField.textField.text!) created!")
+            
+          
+            //Set the displayName here???
+            if let changeRequest = Auth.auth().currentUser?.createProfileChangeRequest() {
+                changeRequest.displayName = self.nameField.textField.text
+                changeRequest.commitChanges { error in
+                    guard error == nil else {
+                        print(error!)
+                        return
+                    }
+                    
+                    print("Name: \(changeRequest.displayName ?? "none") added to user.")
+                }
+            }
         }
     }
         
